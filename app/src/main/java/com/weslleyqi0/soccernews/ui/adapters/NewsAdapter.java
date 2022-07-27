@@ -1,5 +1,8 @@
 package com.weslleyqi0.soccernews.ui.adapters;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +34,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Context context = holder.itemView.getContext();
+
         News news = this.news.get(position);
         holder.binding.tvTitle.setText(news.title);
         holder.binding.tvDescription.setText(news.description);
         Picasso.get().load(news.image).fit().into(holder.binding.ivThumbnail);
+
+        // Implementação da funcionalidade de "Abrir Link":
+        holder.binding.btOpenLink.setOnClickListener(view -> {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(news.link));
+            context.startActivity(i);
+        });
     }
 
     @Override
