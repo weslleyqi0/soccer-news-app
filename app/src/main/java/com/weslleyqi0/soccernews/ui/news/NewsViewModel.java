@@ -1,27 +1,52 @@
 package com.weslleyqi0.soccernews.ui.news;
 
 
+import com.weslleyqi0.soccernews.data.remote.SoccerNewsApi;
 import com.weslleyqi0.soccernews.domain.News;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NewsViewModel extends ViewModel {
-    private final MutableLiveData<List<News>> news;
+
+    private final MutableLiveData<List<News>> news = new MutableLiveData<>();
+    private final SoccerNewsApi api;
 
     public NewsViewModel() {
-        this.news = new MutableLiveData<>();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://weslleyqi0.github.io/soccer-news-api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        List<News> news = new ArrayList<>();
-        news.add(new News(0, "Title 0", "", "", "", false));
-        news.add(new News(1, "Title 1", "", "", "", false));
-        news.add(new News(2, "Title 2", "", "", "", false));
-        news.add(new News(3, "Title 3", "", "", "", false));
-        this.news.setValue(news);
+        api = retrofit.create(SoccerNewsApi.class);
+        findNews();
     }
+
+    private void findNews() {
+        api.getNews().enqueue(new Callback<List<News>>() {
+            @Override
+            public void onResponse(Call<List<News>> call, Response<List<News>> response) {
+                if(response.isSuccessful()){
+                    news.setValue(response.body());
+                }else {
+                    //ToDo Tratar erros de resposta da api
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<News>> call, Throwable t) {
+                //ToDo Tratar erros de resposta da api
+            }
+        });
+    }
+
 
     public MutableLiveData<List<News>> getNews() {
         return this.news;
