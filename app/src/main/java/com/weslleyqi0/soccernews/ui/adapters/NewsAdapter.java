@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Picasso;
 import com.weslleyqi0.soccernews.databinding.NewsItemBinding;
 import com.weslleyqi0.soccernews.domain.News;
 
@@ -33,6 +34,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         News news = this.news.get(position);
         holder.binding.tvTitle.setText(news.title);
         holder.binding.tvDescription.setText(news.description);
+        Picasso.get().load(news.image).fit().into(holder.binding.ivThumbnail);
     }
 
     @Override
