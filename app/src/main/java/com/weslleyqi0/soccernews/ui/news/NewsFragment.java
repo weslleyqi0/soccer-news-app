@@ -21,15 +21,15 @@ public class NewsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NewsViewModel homeViewModel =
+        NewsViewModel newsViewModel =
                 new ViewModelProvider(this).get(NewsViewModel.class);
 
         binding = FragmentNewsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        binding.rvNews.setLayoutManagerl(new LinearLayoutManager(getContext()));
+        binding.rvNews.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        homeViewModel.getNews().observe(getViewLifecycleOwner(), news -> {
+        newsViewModel.getNews().observe(getViewLifecycleOwner(), news -> {
             binding.rvNews.setAdapter(new NewsAdapter(news, updatedNews -> {
                 MainActivity activity = (MainActivity) getActivity();
                 if (activity != null) {
@@ -37,6 +37,24 @@ public class NewsFragment extends Fragment {
                 }
             }));
         });
+
+        newsViewModel.getState().observe(getViewLifecycleOwner(), state -> {
+            switch (state) {
+                case DOING:
+                    //TODO: Iniciar SwipeRefreshLayout (loading).
+                    Log.d("State --->", "DOING - Iniciar SwipeRefreshLayout (loading)");
+                    break;
+                case DONE:
+                    //TODO: Finalizar SwipeRefreshLayout (loading).
+                    Log.d("State --->", "DONE - Finalizar SwipeRefreshLayout (loading)");
+                    break;
+                case ERROR:
+                    //TODO: Finalizar SwipeRefreshLayout (loading).
+                    //TODO: Mostrar um erro genérico.
+                    Log.d("State --->", "ERRo - Finalizar SwipeRefreshLayout (loading)");
+            }
+        });
+
         return root;
     }
 
