@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.weslleyqi0.soccernews.R;
 import com.weslleyqi0.soccernews.ui.MainActivity;
 import com.weslleyqi0.soccernews.databinding.FragmentNewsBinding;
 import com.weslleyqi0.soccernews.ui.adapters.NewsAdapter;
@@ -30,33 +32,36 @@ public class NewsFragment extends Fragment {
 
         binding.rvNews.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        newsViewModel.getNews().observe(getViewLifecycleOwner(), news -> {
-            binding.rvNews.setAdapter(new NewsAdapter(news, updatedNews -> {
-                MainActivity activity = (MainActivity) getActivity();
-                if (activity != null) {
-                    activity.getDb().newsDao().save(updatedNews);
-                }
-            }));
-        });
+        observeNews();
+        observeStates();
 
+        binding.srlNews.setOnRefreshListener(newsViewModel::findNews);
+
+        return root;
+    }
+
+    private void observeStates() {
         newsViewModel.getState().observe(getViewLifecycleOwner(), state -> {
             switch (state) {
                 case DOING:
-                    //TODO: Iniciar SwipeRefreshLayout (loading).
-                    Log.d("State --->", "DOING - Iniciar SwipeRefreshLayout (loading)");
+                    binding.srlNews.setRefreshing(true);
                     break;
                 case DONE:
-                    //TODO: Finalizar SwipeRefreshLayout (loading).
-                    Log.d("State --->", "DONE - Finalizar SwipeRefreshLayout (loading)");
+                    binding.srlNews.setRefreshing(false);
                     break;
                 case ERROR:
-                    //TODO: Finalizar SwipeRefreshLayout (loading).
-                    //TODO: Mostrar um erro genérico.
-                    Log.d("State --->", "ERRo - Finalizar SwipeRefreshLayout (loading)");
+                    binding.srlNews.setRefreshing(false);
+                    Snackbar.make(binding.srlNews, R.string.error_network, Snackbar.LENGTH_SHORT).show();
             }
         });
+    }
 
-        return root;
+    private void observeNews() {
+        newsViewModel.getNews().observe(getViewLifecycleOwner(), news -> {
+            binding.rvNews.setAdapter(new NewsAdapter(news, updatedNews -> {
+                newsViewModel.saveNews(updatedNews);
+            }));
+        });
     }
 
     @Override
