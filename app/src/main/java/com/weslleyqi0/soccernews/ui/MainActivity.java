@@ -12,13 +12,13 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.room.Room;
 
 import com.weslleyqi0.soccernews.R;
-import com.weslleyqi0.soccernews.data.local.AppDatabase;
+import com.weslleyqi0.soccernews.data.local.SoccerNewsDb;
 import com.weslleyqi0.soccernews.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private AppDatabase db;
+    private SoccerNewsDb db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupDb() {
-        db = Room.databaseBuilder(this, AppDatabase.class, "soccer-news")
+        db = Room.databaseBuilder(this, SoccerNewsDb.class, "soccer-news")
                 .allowMainThreadQueries()
                 .build();
     }
 
-    public AppDatabase getDb() {
+    public SoccerNewsDb getDb() {
         return db;
     }
 }
