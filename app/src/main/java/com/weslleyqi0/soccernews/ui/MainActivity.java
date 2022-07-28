@@ -1,4 +1,4 @@
-package com.weslleyqi0.soccernews;
+package com.weslleyqi0.soccernews.ui;
 
 import android.os.Bundle;
 
@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.room.Room;
 
+import com.weslleyqi0.soccernews.R;
 import com.weslleyqi0.soccernews.data.local.AppDatabase;
 import com.weslleyqi0.soccernews.databinding.ActivityMainBinding;
 

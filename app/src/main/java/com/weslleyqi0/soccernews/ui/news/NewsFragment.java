@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.weslleyqi0.soccernews.MainActivity;
+import com.weslleyqi0.soccernews.ui.MainActivity;
 import com.weslleyqi0.soccernews.databinding.FragmentNewsBinding;
 import com.weslleyqi0.soccernews.ui.adapters.NewsAdapter;
 
