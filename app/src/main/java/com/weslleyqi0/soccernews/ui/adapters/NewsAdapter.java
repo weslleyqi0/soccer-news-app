@@ -4,24 +4,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
+import com.weslleyqi0.soccernews.R;
 import com.weslleyqi0.soccernews.databinding.NewsItemBinding;
 import com.weslleyqi0.soccernews.domain.News;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     private List<News> news;
+    private final FavoriteListener favoriteListener;
 
-    public NewsAdapter(List<News> news) {
+    public NewsAdapter(List<News> news, FavoriteListener favoriteListener) {
         this.news = news;
+        this.favoriteListener = favoriteListener;
     }
 
     @NonNull
@@ -55,6 +58,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             i.putExtra(Intent.EXTRA_TEXT, news.link);
             context.startActivity(Intent.createChooser(i, "Share"));
         });
+
+        // Implementação da funcionalidade de "Favoritar" (o evento será instanciado pelo Fragment):
+        holder.binding.ivFavorite.setOnClickListener(view -> {
+            news.favorite = !news.favorite;
+            this.favoriteListener.onFavorite(news);
+            notifyItemChanged(position);
+        });
+
+        int favoriteColor = news.favorite ? R.drawable.ic_favorite: R.drawable.ic_favorite_outline;
+        holder.binding.ivFavorite.setImageDrawable(ContextCompat.getDrawable(context, favoriteColor));
     }
 
     @Override
@@ -70,5 +83,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    public interface FavoriteListener {
+        void onFavorite(News news);
     }
 }

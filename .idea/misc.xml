@@ -4,9 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/00_Estudos/Android/SoccerNews/app/src/main/res/drawable-night/ic_favorite.xml" value="0.196" />
+        <entry key="..\:/00_Estudos/Android/SoccerNews/app/src/main/res/drawable-night/ic_favorite_outline.xml" value="0.199" />
         <entry key="..\:/00_Estudos/Android/SoccerNews/app/src/main/res/drawable-night/ic_share.xml" value="0.196" />
         <entry key="..\:/00_Estudos/Android/SoccerNews/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.179" />
+        <entry key="..\:/00_Estudos/Android/SoccerNews/app/src/main/res/drawable/ic_favorite_.xml" value="0.123" />
+        <entry key="..\:/00_Estudos/Android/SoccerNews/app/src/main/res/drawable/ic_favorite_outline.xml" value="0.199" />
         <entry key="..\:/00_Estudos/Android/SoccerNews/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.179" />
+        <entry key="..\:/00_Estudos/Android/SoccerNews/app/src/main/res/drawable/ic_news.xml" value="0.199" />
         <entry key="..\:/00_Estudos/Android/SoccerNews/app/src/main/res/drawable/ic_share.xml" value="0.179" />
         <entry key="..\:/00_Estudos/Android/SoccerNews/app/src/main/res/layout/activity_main.xml" value="0.346875" />
         <entry key="..\:/00_Estudos/Android/SoccerNews/app/src/main/res/layout/fragment_favorites.xml" value="0.16822916666666668" />
